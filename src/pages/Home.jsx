@@ -1,9 +1,13 @@
-import { Link } from "react-router-dom";
+// import { useState } from "react";
+
 function Home() {
+  // const [inputValue, setInputValue] = useState(``);
+  const onInputChange = (e) => {
+    console.log(e.target.value);
+  };
   return (
     <>
-      <h1>Home Page</h1>
-      <Link to="/starred">Favourite Items</Link>
+      <input type="text" onChange={onInputChange} />
     </>
   );
 }

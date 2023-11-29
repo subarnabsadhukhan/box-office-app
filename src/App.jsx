@@ -2,12 +2,15 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Starred from "./pages/Starred.jsx";
 import NoMatch from "./pages/NoMatch.jsx";
+import MainLayout from "./componenets/MainLayout.jsx";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/starred" element={<Starred />} />
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/starred" element={<Starred />} />
+        </Route>
         <Route path="*" element={<NoMatch />} />
         {/* <Route path="/" element={<App />}>
           <Route index element={<Home />} />
