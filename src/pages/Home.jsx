@@ -2,6 +2,8 @@ import { useState } from "react";
 import { searchMovie } from "../api/omdbapi";
 import SearchForm from "../componenets/SearchForm";
 import { searchActors } from "../api/tvmaze";
+import MoviesGrid from "../componenets/movies/MoviesGrid";
+import ActorsGrid from "../componenets/actors/ActorsGrid";
 
 function Home() {
   const [apiData, setApiData] = useState(null);
@@ -12,11 +14,12 @@ function Home() {
       setApiDataError(null);
       if (searchOption === "movies") {
         const result = await searchMovie(searchStr);
+        console.log(result);
+
         if (result.Response === "False") throw new Error(result.Error);
         setApiData(result.Search);
       } else if (searchOption === "actors") {
         const result = await searchActors(searchStr);
-        console.log(result === `[]`);
 
         if (result.length === 0) throw new Error(`Actor Not Found`);
         setApiData(result);
@@ -32,9 +35,9 @@ function Home() {
     if (apiData) {
       return apiData.map((search) => {
         if (search.imdbID) {
-          return <p key={search.imdbID}>{search.Title}</p>;
+          return <MoviesGrid key={search.imdbID} search={search} />;
         } else if (search.person) {
-          return <p key={search.person.id}>{search.person.name}</p>;
+          return <ActorsGrid key={search.person.id} person={search.person} />;
         }
       });
     }
