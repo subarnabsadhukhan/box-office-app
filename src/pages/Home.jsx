@@ -1,23 +1,26 @@
 import { useState } from "react";
 import { searchMovie } from "../api/omdbapi";
+import SearchForm from "../componenets/SearchForm";
+import { searchActors } from "../api/tvmaze";
 
 function Home() {
-  const [searchStr, setSearchStr] = useState(``);
   const [apiData, setApiData] = useState(null);
   const [apiDataError, setApiDataError] = useState(null);
 
-  const onSearchInputChange = (e) => {
-    setSearchStr(e.target.value);
-  };
-  const onSearch = async (e) => {
-    e.preventDefault();
-
+  const onSearch = async ({ searchStr, searchOption }) => {
     try {
       setApiDataError(null);
-      const result = await searchMovie(searchStr);
-      if (result.Response === "False") throw new Error(result.Error);
+      if (searchOption === "movies") {
+        const result = await searchMovie(searchStr);
+        if (result.Response === "False") throw new Error(result.Error);
+        setApiData(result.Search);
+      } else if (searchOption === "actors") {
+        const result = await searchActors(searchStr);
+        console.log(result === `[]`);
 
-      setApiData(result.Search);
+        if (result.length === 0) throw new Error(`Actor Not Found`);
+        setApiData(result);
+      }
     } catch (e) {
       setApiDataError(e);
     }
@@ -27,16 +30,19 @@ function Home() {
       return <div>Error: {apiDataError.message}</div>;
     }
     if (apiData) {
-      return apiData.map((movie) => <p key={movie.imdbID}>{movie.Title}</p>);
+      return apiData.map((search) => {
+        if (search.imdbID) {
+          return <p key={search.imdbID}>{search.Title}</p>;
+        } else if (search.person) {
+          return <p key={search.person.id}>{search.person.name}</p>;
+        }
+      });
     }
     return null;
   };
   return (
     <>
-      <form onSubmit={onSearch}>
-        <input type="text" value={searchStr} onChange={onSearchInputChange} />
-        <button type="submit">Search</button>
-      </form>
+      <SearchForm onSearch={onSearch} />
       <div>{renderApiData()}</div>
     </>
   );
