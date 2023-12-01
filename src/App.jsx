@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Starred from "./pages/Starred.jsx";
+import Movies from "./pages/Movies.jsx";
 import NoMatch from "./pages/NoMatch.jsx";
 import MainLayout from "./componenets/MainLayout.jsx";
 function App() {
@@ -11,6 +12,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/starred" element={<Starred />} />
         </Route>
+        <Route path={`/movie/:imdbID`} element={<Movies />} />
         <Route path="*" element={<NoMatch />} />
         {/* <Route path="/" element={<App />}>
           <Route index element={<Home />} />
