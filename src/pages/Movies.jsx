@@ -1,28 +1,18 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { showMovieDetails } from "../api/omdbapi";
+import { useQuery } from "@tanstack/react-query";
 
 const Movies = () => {
   const { imdbID } = useParams();
-  const [showData, setShowData] = useState(null);
-  const [showError, setShowError] = useState(null);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await showMovieDetails(imdbID);
-        console.log(data);
+  const { data, error } = useQuery({
+    queryKey: ["movie", imdbID],
+    queryFn: () => showMovieDetails(imdbID),
+    networkMode: "always",
+  });
 
-        setShowData(data);
-      } catch (error) {
-        setShowError(error.message);
-      }
-    }
-    fetchData();
-  }, [imdbID]);
-
-  if (showError) return <div>{showError}</div>;
-  if (showData) return <div>{showData.Actors}</div>;
+  if (error) return <div>{error.message}</div>;
+  if (data) return <div>{data.Actors}</div>;
 
   return (
     <>
