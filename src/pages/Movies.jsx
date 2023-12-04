@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { showMovieDetails } from "../api/omdbapi";
 import { useQuery } from "@tanstack/react-query";
 import MoviesMainData from "../componenets/movies/MoviesMainData";
@@ -17,9 +17,12 @@ const Movies = () => {
     console.log(data);
 
     return (
-      <div>
-        <MoviesMainData data={data} />
-      </div>
+      <>
+        <Link to="/">Go Back to Home</Link>
+        <div>
+          <MoviesMainData data={data} />
+        </div>
+      </>
     );
   }
 

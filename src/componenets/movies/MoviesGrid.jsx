@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 const MoviesGrid = ({ search }) => {
   const { Title, Poster, imdbID } = search;
   return (
@@ -12,7 +10,9 @@ const MoviesGrid = ({ search }) => {
       </div>
       <h1>{Title}</h1>
       <div>
-        <Link to={`/movie/${imdbID}`}>Read More</Link>
+        <a href={`/movie/${imdbID}`} target="_blank" rel="noreferrer">
+          Read More
+        </a>
         <button type="button">Star Me</button>
       </div>
     </>
