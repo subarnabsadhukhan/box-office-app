@@ -1,5 +1,6 @@
-const MoviesGrid = ({ search }) => {
+const MoviesGrid = ({ search, starMeClick }) => {
   const { Title, Poster, imdbID } = search;
+
   return (
     <>
       <div>
@@ -13,7 +14,9 @@ const MoviesGrid = ({ search }) => {
         <a href={`/movie/${imdbID}`} target="_blank" rel="noreferrer">
           Read More
         </a>
-        <button type="button">Star Me</button>
+        <button type="button" onClick={() => starMeClick(imdbID)}>
+          Star Me
+        </button>
       </div>
     </>
   );
