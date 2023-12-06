@@ -1,41 +1,15 @@
-import { useState, useReducer, useEffect } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { searchMovie } from "../api/omdbapi";
 import { searchActors } from "../api/tvmaze";
 import SearchForm from "../componenets/SearchForm";
 import MoviesGrid from "../componenets/movies/MoviesGrid";
 import ActorsGrid from "../componenets/actors/ActorsGrid";
+import { useStarredMovies } from "../lib/useStarredMovies";
 
-const usePersistedReducer = (reducer, initialState, localStorageKey) => {
-  const [state, dispatch] = useReducer(reducer, initialState, (initial) => {
-    const persistedValue = localStorage.getItem(localStorageKey);
-    return persistedValue ? JSON.parse(persistedValue) : initial;
-  });
-
-  useEffect(() => {
-    localStorage.setItem(localStorageKey, JSON.stringify(state));
-  }, [state, localStorageKey]);
-
-  return [state, dispatch];
-};
-
-const starredMoviesReducer = (currentStarred, action) => {
-  switch (action.type) {
-    case "STAR":
-      return currentStarred.concat(action.imdbID);
-    case "UNSTAR":
-      return currentStarred.filter((movieId) => movieId !== action.imdbID);
-    default:
-      return currentStarred;
-  }
-};
 function Home() {
   const [filter, setFilter] = useState(null);
-  const [starredMovies, dispatch] = usePersistedReducer(
-    starredMoviesReducer,
-    [],
-    "starredShows"
-  );
+  const [starredMovies, dispatch] = useStarredMovies();
   console.log(starredMovies);
 
   const starMeClick = (imdbID) => {
@@ -80,6 +54,7 @@ function Home() {
               key={search.imdbID}
               search={search}
               starMeClick={starMeClick}
+              isStarred={starredMovies.includes(search.imdbID)}
             />
           );
         } else if (search.person) {

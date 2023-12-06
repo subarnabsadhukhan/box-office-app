@@ -1,4 +1,4 @@
-const MoviesGrid = ({ search, starMeClick }) => {
+const MoviesGrid = ({ search, starMeClick, isStarred }) => {
   const { Title, Poster, imdbID } = search;
 
   return (
@@ -15,7 +15,7 @@ const MoviesGrid = ({ search, starMeClick }) => {
           Read More
         </a>
         <button type="button" onClick={() => starMeClick(imdbID)}>
-          Star Me
+          {isStarred ? "UNSTAR ME" : "STAR ME"}
         </button>
       </div>
     </>
