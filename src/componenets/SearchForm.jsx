@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { usePersistedSearchStr } from "../lib/usePersistedSearchStr";
 
 const SearchForm = function ({ onSearch }) {
-  const [searchStr, setSearchStr] = useState(``);
+  const [searchStr, dispatch] = usePersistedSearchStr();
+  console.log(searchStr);
+
   const [searchOption, setSearchOption] = useState(`movies`);
   const onSearchInputChange = (e) => {
-    setSearchStr(e.target.value);
+    dispatch({ type: "NEWSEARCH", value: e.target.value });
   };
   const onRadioChange = (e) => {
     setSearchOption(e.target.value);
