@@ -1,10 +1,21 @@
 import styled from "styled-components";
 import { SearchCard, SearchImgWrapper } from "../common/SearchCard";
 import { StarIcon } from "../common/StarIcon";
+import { useRef } from "react";
 
 const MoviesGrid = ({ search, starMeClick, isStarred }) => {
   const { Title, Poster, imdbID, Plot } = search;
-
+  const StarBtnRef = useRef();
+  const handleStarClick = () => {
+    starMeClick(imdbID);
+    const starBtnEl = StarBtnRef.current;
+    if (!starBtnEl) return;
+    if (isStarred) {
+      starBtnEl.classList.remove("animate");
+    } else {
+      starBtnEl.classList.add("animate");
+    }
+  };
   return (
     <SearchCard>
       <SearchImgWrapper>
@@ -19,7 +30,7 @@ const MoviesGrid = ({ search, starMeClick, isStarred }) => {
         <a href={`/movie/${imdbID}`} target="_blank" rel="noreferrer">
           Read More
         </a>
-        <StarBtn type="button" onClick={() => starMeClick(imdbID)}>
+        <StarBtn ref={StarBtnRef} type="button" onClick={handleStarClick}>
           <StarIcon $active={isStarred} />
         </StarBtn>
       </ActionSection>
@@ -55,5 +66,21 @@ const StarBtn = styled.button`
   align-items: center;
   &:hover {
     cursor: pointer;
+  }
+  &.animate {
+    ${StarIcon} {
+      animation: increase 0.75s ease-in forwards;
+      @keyframes increase {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(3) rotate(45deg);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    }
   }
 `;
