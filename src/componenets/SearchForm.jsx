@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { usePersistedSearchStr } from "../lib/usePersistedSearchStr";
+import CustomRadio from "./CustomRadio";
 
 const SearchForm = function ({ onSearch }) {
   const [searchStr, dispatch] = usePersistedSearchStr();
@@ -21,26 +22,20 @@ const SearchForm = function ({ onSearch }) {
   return (
     <form onSubmit={onSubmit}>
       <input type="text" value={searchStr} onChange={onSearchInputChange} />
-      <label>
-        <input
-          type="radio"
-          name="search-options"
-          checked={searchOption === `movies`}
-          value="movies"
-          onChange={onRadioChange}
-        />
-        Movies
-      </label>
-      <label>
-        <input
-          type="radio"
-          name="search-options"
-          checked={searchOption === `actors`}
-          value="actors"
-          onChange={onRadioChange}
-        />
-        Actors
-      </label>
+      <CustomRadio
+        label="Movies"
+        name="search-options"
+        checked={searchOption === `movies`}
+        value="movies"
+        onChange={onRadioChange}
+      />
+      <CustomRadio
+        label="Actors"
+        name="search-options"
+        checked={searchOption === `actors`}
+        value="actors"
+        onChange={onRadioChange}
+      />
       <button type="submit">Search</button>
     </form>
   );
