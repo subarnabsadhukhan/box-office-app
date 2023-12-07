@@ -1,6 +1,6 @@
 import { APIKEY } from "./api-key";
 
-const BASE_URL = `http://www.omdbapi.com`;
+const BASE_URL = `https://www.omdbapi.com`;
 
 const apiGet = async function (queryString) {
   const response = await fetch(`${BASE_URL}/?apikey=${APIKEY}&${queryString}`);

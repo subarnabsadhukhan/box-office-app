@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { SearchCard, SearchImgWrapper } from "../common/SearchCard";
 import { StarIcon } from "../common/StarIcon";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 
 const MoviesGrid = ({ search, starMeClick, isStarred }) => {
   const { Title, Poster, imdbID, Plot } = search;
@@ -27,9 +28,9 @@ const MoviesGrid = ({ search, starMeClick, isStarred }) => {
       <h1>{Title}</h1>
       <p>{Plot ? `${Plot.split(" ").slice(0, 20).join(" ")}...` : ""}</p>
       <ActionSection>
-        <a href={`/movie/${imdbID}`} target="_blank" rel="noreferrer">
+        <Link to={`/movie/${imdbID}`} target="_blank" rel="noreferrer">
           Read More
-        </a>
+        </Link>
         <StarBtn ref={StarBtnRef} type="button" onClick={handleStarClick}>
           <StarIcon $active={isStarred} />
         </StarBtn>
