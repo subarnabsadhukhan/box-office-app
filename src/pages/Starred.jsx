@@ -2,6 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useStarredMovies } from "../lib/useStarredMovies";
 import { showMovieDetailsByIDs } from "../api/omdbapi";
 import MoviesGrid from "../componenets/movies/MoviesGrid";
+import { FlexGrid } from "../componenets/common/FlexGrid";
+import { TextCenter } from "./../componenets/common/TextCenter";
 
 function Starred() {
   const [starredMoviesIDs, dispatch] = useStarredMovies();
@@ -25,10 +27,10 @@ function Starred() {
   });
 
   if (starredMovies && starredMovies.length === 0)
-    return <div>No Movies were Starred</div>;
+    return <TextCenter>No Movies were Starred</TextCenter>;
   if (starredMovies && starredMovies.length > 0)
     return (
-      <div>
+      <FlexGrid>
         {starredMovies.map((movies) => (
           <MoviesGrid
             key={movies.imdbID}
@@ -37,12 +39,14 @@ function Starred() {
             isStarred={starredMoviesIDs.includes(movies.imdbID)}
           />
         ))}
-      </div>
+      </FlexGrid>
     );
   if (starredMoviesError)
-    return <div>Error Occurred: {starredMoviesError.message}</div>;
+    return (
+      <TextCenter>Error Occurred: {starredMoviesError.message}</TextCenter>
+    );
 
-  return <div>Data is Loading...</div>;
+  return <TextCenter>Data is Loading...</TextCenter>;
 }
 
 export default Starred;

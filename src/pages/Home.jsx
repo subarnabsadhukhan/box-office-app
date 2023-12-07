@@ -6,6 +6,8 @@ import SearchForm from "../componenets/SearchForm";
 import MoviesGrid from "../componenets/movies/MoviesGrid";
 import ActorsGrid from "../componenets/actors/ActorsGrid";
 import { useStarredMovies } from "../lib/useStarredMovies";
+import { FlexGrid } from "../componenets/common/FlexGrid";
+import { TextCenter } from "../componenets/common/TextCenter";
 
 function Home() {
   const [filter, setFilter] = useState(null);
@@ -43,7 +45,7 @@ function Home() {
   };
   const renderApiData = () => {
     if (apiDataError) {
-      return <div>Error: {apiDataError.message}</div>;
+      return <TextCenter>Error: {apiDataError.message}</TextCenter>;
     }
 
     if (apiData) {
@@ -67,7 +69,7 @@ function Home() {
   return (
     <>
       <SearchForm onSearch={onSearch} />
-      <div>{renderApiData()}</div>
+      <FlexGrid>{renderApiData()}</FlexGrid>
     </>
   );
 }
