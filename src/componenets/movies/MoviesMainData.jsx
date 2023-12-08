@@ -16,7 +16,6 @@ const MoviesMainData = (props) => {
     Writer,
     imdbRating,
   } = props.data;
-  console.log(Poster);
 
   return (
     <>

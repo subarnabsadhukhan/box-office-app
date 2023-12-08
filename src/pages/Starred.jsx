@@ -16,8 +16,6 @@ function Starred() {
     queryKey: ["search", starredMoviesIDs],
     queryFn: () =>
       showMovieDetailsByIDs(starredMoviesIDs).then((result) => {
-        console.log(result);
-
         return result;
       }),
 

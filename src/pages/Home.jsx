@@ -12,7 +12,6 @@ import { TextCenter } from "../componenets/common/TextCenter";
 function Home() {
   const [filter, setFilter] = useState(null);
   const [starredMovies, dispatch] = useStarredMovies();
-  console.log(starredMovies);
 
   const starMeClick = (imdbID) => {
     const isStarred = starredMovies.includes(imdbID);
@@ -24,7 +23,6 @@ function Home() {
     queryFn: async () => {
       if (filter.searchOption === "movies") {
         const result = await searchMovie(filter.searchStr);
-        console.log(result);
 
         if (result.Response === "False") throw new Error(result.Error);
         return result.Search;

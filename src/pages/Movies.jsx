@@ -16,7 +16,7 @@ const Movies = () => {
 
   if (error) return <TextCenter>{error.message}</TextCenter>;
   if (data) {
-    console.log(data);
+  
 
     return (
       <ShowPageWrapper>

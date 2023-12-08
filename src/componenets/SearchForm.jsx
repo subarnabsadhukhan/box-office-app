@@ -5,7 +5,6 @@ import styled from "styled-components";
 
 const SearchForm = function ({ onSearch }) {
   const [searchStr, dispatch] = usePersistedSearchStr();
-  console.log(searchStr);
 
   const [searchOption, setSearchOption] = useState(`movies`);
   const onSearchInputChange = (e) => {
